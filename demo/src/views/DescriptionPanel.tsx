@@ -14,34 +14,15 @@ const DescriptionPanel: FC = () => {
       }
     >
       <p>
-        This map represents a <i>network</i> of Wikipedia articles around the topic of "Data vizualisation". Each{" "}
-        <i>node</i> represents an article, and each edge a{" "}
-        <a target="_blank" rel="noreferrer" href="https://en.wikipedia.org/wiki/See_also">
-          "See also" link
-        </a>
-        .
+        This map represents a <i>bipartite network</i> of TU Wien theses and their author provided topics. Each{" "} colored <i>node</i> represents a thesis, each black node a topic and each edge an assingment of a topic to a thesis.
       </p>
       <p>
-        The seed articles were selected by hand by the{" "}
-        <a target="_blank" rel="noreferrer" href="https://medialab.sciencespo.fr/">
-          Sciences-Po médialab
-        </a>{" "}
-        team, and the network was crawled using{" "}
-        <a target="_blank" rel="noreferrer" href="https://densitydesign.github.io/strumentalia-seealsology/">
-          Seealsology
-        </a>
-        , and then cleaned and enriched manually. This makes the dataset creditable to both the médialab team and{" "}
-        <a target="_blank" rel="noreferrer" href="https://en.wikipedia.org/wiki/Wikipedia:Wikipedians">
-          Wikipedia editors
-        </a>
-        .
+        The theses were retrieved via the ALMA LIS instance of the TU Wien Bibliothek, limited to those with a published PDF link and at least two connected topics.
       </p>
       <p>
         This web application has been developed by{" "}
-        <a target="_blank" rel="noreferrer" href="https://www.ouestware.com/en/">
-          OuestWare
-        </a>
-        , using{" "}
+        <a target="_blank" rel="noreferrer" href="https://www.tuwien.at/bibliothek">TU Wien Bibliothek </a>
+        based on the {" "} <a target="_blank" rel="noreferrer" href="sigma.js demo">sigma.js demo</a>, using{" "}
         <a target="_blank" rel="noreferrer" href="https://reactjs.org/">
           react
         </a>{" "}
@@ -56,12 +37,7 @@ const DescriptionPanel: FC = () => {
         .
       </p>
       <p>
-        Nodes sizes are related to their{" "}
-        <a target="_blank" rel="noreferrer" href="https://en.wikipedia.org/wiki/Betweenness_centrality">
-          betweenness centrality
-        </a>
-        . More central nodes (ie. bigger nodes) are important crossing points in the network. Finally, You can click a
-        node to open the related Wikipedia article.
+		Topic nodes sizes are related to their indegree, representing their popularity. You can click a thesis node to open the related PDF document.
       </p>
     </Panel>
   );

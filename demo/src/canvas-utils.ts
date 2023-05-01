@@ -37,9 +37,9 @@ export function drawHover(context: CanvasRenderingContext2D, data: PlainObject, 
   const weight = settings.labelWeight;
   const subLabelSize = size - 2;
 
-  const label = data.label;
-  const subLabel = data.tag !== "unknown" ? data.tag : "";
-  const clusterLabel = data.clusterLabel;
+	const label = data.title=="null" ? data.label : data.title;
+	const subLabel = (data.tag !== "unknown" && data.title!="null") ? data.tag : "";
+	const clusterLabel = (data.title!="null") ? data.clusterLabel : "";
 
   // Then we draw the label background
   context.beginPath();
@@ -99,16 +99,24 @@ export default function drawLabel(
 ): void {
   if (!data.label) return;
 
-  const size = settings.labelSize,
+	var mult=1.0;
+		if (data.forceLabel)
+			mult=2.0;
+	const size = settings.labelSize*mult,
     font = settings.labelFont,
     weight = settings.labelWeight;
 
   context.font = `${weight} ${size}px ${font}`;
   const width = context.measureText(data.label).width + 8;
 
-  context.fillStyle = "#ffffffcc";
-  context.fillRect(data.x + data.size, data.y + size / 3 - 15, width, 20);
-
-  context.fillStyle = "#000";
+	if (data.forceLabel)
+		context.fillStyle = "#000";
+	else
+		context.fillStyle = "#ffffffcc";
+	context.fillRect(data.x + data.size, data.y + size / 3 - 10*mult, width, 15*mult);
+	if (data.forceLabel)
+		context.fillStyle = "#ffffffcc";
+	else
+		context.fillStyle = "#000";
   context.fillText(data.label, data.x + data.size + 3, data.y + size / 3);
 }

@@ -1,4 +1,4 @@
-import { useSigma } from "react-sigma-v2";
+import { useSigma } from "@react-sigma/core";
 import { FC, useEffect } from "react";
 
 import { drawHover } from "../canvas-utils";
@@ -39,8 +39,8 @@ const GraphSettingsController: FC<{ hoveredNode: string | null }> = ({ children,
             node === debouncedHoveredNode ||
             graph.hasEdge(node, debouncedHoveredNode) ||
             graph.hasEdge(debouncedHoveredNode, node)
-              ? { ...data, zIndex: 1 }
-              : { ...data, zIndex: 0, label: "", color: NODE_FADE_COLOR, image: null, highlighted: false }
+              ? { ...data, zIndex: 1, forceLabel: true }
+              : { ...data}
         : null,
     );
     sigma.setSetting(
@@ -48,8 +48,8 @@ const GraphSettingsController: FC<{ hoveredNode: string | null }> = ({ children,
       debouncedHoveredNode
         ? (edge, data) =>
             graph.hasExtremity(edge, debouncedHoveredNode)
-              ? { ...data, color: hoveredColor, size: 4 }
-              : { ...data, color: EDGE_FADE_COLOR, hidden: true }
+              ? { ...data, color: "#FFF", size: 5, hidden: false}
+              : { ...data}
         : null,
     );
   }, [debouncedHoveredNode]);

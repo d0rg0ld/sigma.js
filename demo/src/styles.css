@@ -63,6 +63,7 @@ body {
 #app-root,
 .sigma-container {
   position: absolute;
+  background: black;
   inset: 0;
 }
 .controls {

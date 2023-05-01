@@ -1,4 +1,4 @@
-import { useRegisterEvents, useSigma } from "react-sigma-v2";
+import { useRegisterEvents, useSigma } from "@react-sigma/core";
 import { FC, useEffect } from "react";
 
 function getMouseLayer() {
@@ -10,6 +10,9 @@ const GraphEventsController: FC<{ setHoveredNode: (node: string | null) => void 
   const graph = sigma.getGraph();
   const registerEvents = useRegisterEvents();
 
+  var actNode: string;
+  actNode="";
+
   /**
    * Initialize here settings that require to know the graph and/or the sigma
    * instance:
@@ -17,9 +20,17 @@ const GraphEventsController: FC<{ setHoveredNode: (node: string | null) => void 
   useEffect(() => {
     registerEvents({
       clickNode({ node }) {
-        if (!graph.getNodeAttribute(node, "hidden")) {
-          window.open(graph.getNodeAttribute(node, "URL"), "_blank");
-        }
+               if (actNode=="") {
+                       actNode=node;
+                       setHoveredNode(node);
+                       graph.setNodeAttribute(node, "highlighted", true);
+                       console.log("clickNode activate");
+               } else {
+                       graph.setNodeAttribute(actNode, "highlighted", false);
+                       actNode="";
+                       setHoveredNode(null);
+                       console.log("clickNode deactivate");
+               }
       },
       enterNode({ node }) {
         setHoveredNode(node);

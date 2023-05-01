@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { SigmaContainer, ZoomControl, FullScreenControl } from "react-sigma-v2";
+import { SigmaContainer, ZoomControl, FullScreenControl } from "@react-sigma/core";
 import { omit, mapValues, keyBy, constant } from "lodash";
 
 import getNodeProgramImage from "sigma/rendering/webgl/programs/node.image";
@@ -15,7 +15,7 @@ import drawLabel from "../canvas-utils";
 import GraphTitle from "./GraphTitle";
 import TagsPanel from "./TagsPanel";
 
-import "react-sigma-v2/lib/react-sigma-v2.css";
+import "@react-sigma/core/lib/react-sigma.min.css";
 import { GrClose } from "react-icons/gr";
 import { BiRadioCircleMarked, BiBookContent } from "react-icons/bi";
 import { BsArrowsFullscreen, BsFullscreenExit, BsZoomIn, BsZoomOut } from "react-icons/bs";
@@ -49,15 +49,17 @@ const Root: FC = () => {
   return (
     <div id="app-root" className={showContents ? "show-contents" : ""}>
       <SigmaContainer
-        graphOptions={{ type: "directed" }}
-        initialSettings={{
+        //graphOptions={{ type: "directed" }}
+        settings={{
           nodeProgramClasses: { image: getNodeProgramImage() },
           labelRenderer: drawLabel,
           defaultNodeType: "image",
-          defaultEdgeType: "arrow",
+          defaultEdgeType: "line",
           labelDensity: 0.07,
-          labelGridCellSize: 60,
-          labelRenderedSizeThreshold: 15,
+		  labelSize: 10,
+          labelGridCellSize: 30,
+		  labelColor: { color: "#FFF"},
+          labelRenderedSizeThreshold: 6.3,
           labelFont: "Lato, sans-serif",
           zIndex: true,
         }}
@@ -81,16 +83,16 @@ const Root: FC = () => {
                 </button>
               </div>
               <FullScreenControl
-                className="ico"
-                customEnterFullScreen={<BsArrowsFullscreen />}
-                customExitFullScreen={<BsFullscreenExit />}
-              />
+                className="ico">
+                <BsArrowsFullscreen />
+                <BsFullscreenExit />
+			  </FullScreenControl>
               <ZoomControl
-                className="ico"
-                customZoomIn={<BsZoomIn />}
-                customZoomOut={<BsZoomOut />}
-                customZoomCenter={<BiRadioCircleMarked />}
-              />
+                className="ico">
+                <BsZoomIn />
+                <BsZoomOut />
+                <BiRadioCircleMarked />
+              </ZoomControl>
             </div>
             <div className="contents">
               <div className="ico">

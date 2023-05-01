@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { useSigma } from "react-sigma-v2";
+import { useSigma } from "@react-sigma/core";
 
 import { FiltersState } from "../types";
 
@@ -26,7 +26,7 @@ const GraphTitle: FC<{ filters: FiltersState }> = ({ filters }) => {
 
   return (
     <div className="graph-title">
-      <h1>A cartography of Wikipedia pages around data visualization</h1>
+      <h1>Map of TU Wien theses by author topics</h1>
       <h2>
         <i>
           {graph.order} node{graph.order > 1 ? "s" : ""}{" "}

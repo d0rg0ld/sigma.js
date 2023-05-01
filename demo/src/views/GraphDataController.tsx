@@ -1,4 +1,4 @@
-import { useSigma } from "react-sigma-v2";
+import { useSigma } from "@react-sigma/core";
 import { FC, useEffect } from "react";
 import { keyBy, omit } from "lodash";
 
@@ -24,7 +24,7 @@ const GraphDataController: FC<{ dataset: Dataset; filters: FiltersState }> = ({ 
         image: `${process.env.PUBLIC_URL}/images/${tags[node.tag].image}`,
       }),
     );
-    dataset.edges.forEach(([source, target]) => graph.addEdge(source, target, { size: 1 }));
+    dataset.edges.forEach(([source, target]) => graph.addEdge(source, target, { size: 1, hidden: true }));
 
     // Use degrees as node sizes:
     const scores = graph.nodes().map((node) => graph.getNodeAttribute(node, "score"));
