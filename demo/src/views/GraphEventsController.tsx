@@ -19,6 +19,13 @@ const GraphEventsController: FC<{ setHoveredNode: (node: string | null) => void 
    */
   useEffect(() => {
     registerEvents({
+	  doubleClickNode({ node }) {
+		console.log("doubleclickNode");
+       
+        if (!graph.getNodeAttribute(node, "hidden")) {
+          window.open(graph.getNodeAttribute(node, "URL"), "_blank");
+        }
+      },
       clickNode({ node }) {
                if (actNode=="") {
                        actNode=node;

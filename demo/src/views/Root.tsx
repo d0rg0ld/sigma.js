@@ -61,6 +61,8 @@ const Root: FC = () => {
 		  labelColor: { color: "#FFF"},
           labelRenderedSizeThreshold: 6.3,
           labelFont: "Lato, sans-serif",
+		  minCameraRatio: 1,
+		  maxCameraRatio: 1,
           zIndex: true,
         }}
         className="react-sigma"
