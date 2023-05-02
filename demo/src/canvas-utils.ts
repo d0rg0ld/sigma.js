@@ -101,7 +101,7 @@ export default function drawLabel(
 
 	var mult=1.0;
 		if (data.forceLabel)
-			mult=2.0;
+			mult=1.2;
 	const size = settings.labelSize*mult,
     font = settings.labelFont,
     weight = settings.labelWeight;
