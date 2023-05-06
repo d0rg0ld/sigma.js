@@ -222,9 +222,10 @@ export default class Sigma<GraphType extends Graph = Graph> extends TypedEventEm
     this.container = container;
 
     // Initializing contexts
-    this.createWebGLContext("edges", { preserveDrawingBuffer: true });
+    //this.createWebGLContext("edges", { preserveDrawingBuffer: true });
     this.createCanvasContext("edgeLabels");
     this.createWebGLContext("nodes");
+	this.createWebGLContext("edges", { preserveDrawingBuffer: true });
     this.createCanvasContext("labels");
     this.createCanvasContext("hovers");
     this.createWebGLContext("hoverNodes");

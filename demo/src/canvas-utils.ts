@@ -43,14 +43,55 @@ export function drawHover(context: CanvasRenderingContext2D, data: PlainObject, 
 
   // Then we draw the label background
   context.beginPath();
-  context.fillStyle = "#fff";
+  context.globalAlpha= 0.7;
+  //context.fillStyle = 'rgba(255,255,255,.9)';
+  context.fillStyle = '#fff';
   context.shadowOffsetX = 0;
   context.shadowOffsetY = 2;
   context.shadowBlur = 8;
   context.shadowColor = "#000";
 
   context.font = `${weight} ${size}px ${font}`;
-  const labelWidth = context.measureText(label).width;
+  
+  var tokens=label.split(" ");
+  var lines= [];
+  var lindex=-1;
+  var labidx=0;
+  var maxlinelen=30;
+  var linelengths=[];
+  var maxl=-100;
+  var maxidx=-1;
+  
+  for (var t in tokens) {
+	  if (lindex==-1) {
+		  lindex=0;
+		  lines[lindex]=tokens[t];
+		  continue;
+	  }
+	  if (lines[lindex].length < maxlinelen)
+		  lines[lindex]+=(" " + tokens[t]);
+	  else {
+		  linelengths[lindex]=lines[lindex].length;
+		  if (linelengths[lindex]>maxl) {
+			  maxl=linelengths[lindex];
+			  maxidx=lindex;
+		  }
+		  lindex+=1;
+		  lines[lindex]=tokens[t];
+	  }
+  }
+  linelengths[lindex]=lines[lindex].length;
+  if (linelengths[lindex]>maxl) {
+	  maxl=linelengths[lindex];
+	  maxidx=lindex;
+  }
+  
+  console.log(lines);
+  
+  const labelWidth = context.measureText(lines[maxidx]).width;
+  
+  
+  
   context.font = `${weight} ${subLabelSize}px ${font}`;
   const subLabelWidth = subLabel ? context.measureText(subLabel).width : 0;
   context.font = `${weight} ${subLabelSize}px ${font}`;
@@ -61,7 +102,9 @@ export function drawHover(context: CanvasRenderingContext2D, data: PlainObject, 
   const x = Math.round(data.x);
   const y = Math.round(data.y);
   const w = Math.round(textWidth + size / 2 + data.size + 3);
-  const hLabel = Math.round(size / 2 + 4);
+  
+  const hLabel = Math.round((size )*lines.length + 4);
+  
   const hSubLabel = subLabel ? Math.round(subLabelSize / 2 + 9) : 0;
   const hClusterLabel = Math.round(subLabelSize / 2 + 9);
 
@@ -76,7 +119,10 @@ export function drawHover(context: CanvasRenderingContext2D, data: PlainObject, 
   // And finally we draw the labels
   context.fillStyle = TEXT_COLOR;
   context.font = `${weight} ${size}px ${font}`;
-  context.fillText(label, data.x + data.size + 3, data.y + size / 3);
+  
+	for (let i = 0; i < lines.length; i++)
+		context.fillText(lines[i], data.x + data.size + 3, data.y + (size )*(i+1));
+  //context.fillText(label, data.x + data.size + 3, data.y + size / 3);
 
   if (subLabel) {
     context.fillStyle = TEXT_COLOR;
@@ -86,8 +132,58 @@ export function drawHover(context: CanvasRenderingContext2D, data: PlainObject, 
 
   context.fillStyle = data.color;
   context.font = `${weight} ${subLabelSize}px ${font}`;
-  context.fillText(clusterLabel, data.x + data.size + 3, data.y + size / 3 + 3 + subLabelSize);
+  context.fillText(clusterLabel, data.x + data.size + 3, data.y + (size)*lines.length + 3 + subLabelSize);
 }
+
+/*
+  var tokens=data.label.split(" ");
+  var lines= [];
+  var lindex=-1;
+  var labidx=0;
+  var maxlinelen=20;
+  var linelengths=[];
+  var maxl=-100;
+  var maxidx=-1;
+  
+  for (var t in tokens) {
+	  if (lindex==-1) {
+		  lindex=0;
+		  lines[lindex]=t;
+	  }
+	  if (lines[lindex].length < maxlinelen)
+		  lines[lindex]+=(" " + t);
+	  else {
+		  linelengths[lindex]=lines[lindex].length;
+		  if (linelengths[lindex]>maxl) {
+			  maxl=linelengths[lindex];
+			  maxidx=lindex;
+		  }
+		  lindex+=1;
+		  lines[lindex]=t;
+	  }
+  }
+  linelengths[lindex]=lines[lindex].length;
+  if (linelengths[lindex]>maxl) {
+	  maxl=linelengths[lindex];
+	  maxidx=lindex;
+  }
+  
+  console.log(lines);
+  
+  const width = context.measureText(lines[maxidx]).width + 8;
+
+	if (data.forceLabel)
+		context.fillStyle = "#000";
+	else
+		context.fillStyle = "#ffffffcc";
+	context.fillRect(data.x + data.size, data.y + size / 3 - 10*mult, width, 15*mult*lines.length);
+	if (data.forceLabel)
+		context.fillStyle = "#ffffffcc";
+	else
+		context.fillStyle = "#000";
+	for (let i = 0; i < lines.length; i++)
+		context.fillText(lines[i], data.x + data.size + 3, data.y + size / 3 + i*10*mult);
+*/
 
 /**
  * Custom label renderer

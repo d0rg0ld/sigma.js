@@ -48,7 +48,7 @@ const GraphSettingsController: FC<{ hoveredNode: string | null }> = ({ children,
       debouncedHoveredNode
         ? (edge, data) =>
             graph.hasExtremity(edge, debouncedHoveredNode)
-              ? { ...data, color: "#FFF", size: 5, hidden: false}
+              ? { ...data, zIndex: 2,color: "#FFF", size: 5, hidden: false}
               : { ...data}
         : null,
     );
